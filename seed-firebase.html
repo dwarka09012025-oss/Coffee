@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Seed Firebase Database</title>
+  <style>
+    body { font-family: sans-serif; max-width: 700px; margin: 40px auto; padding: 20px; background: #fafafa; }
+    h1 { color: #4a2c2a; }
+    button { background: #4a2c2a; color: #fff; border: none; padding: 14px 32px; font-size: 16px; border-radius: 8px; cursor: pointer; margin: 10px 4px; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    button.danger { background: #c0392b; }
+    #log { margin-top: 24px; background: #1a1a1a; color: #0f0; padding: 16px; border-radius: 8px; font-family: monospace; font-size: 13px; max-height: 400px; overflow-y: auto; white-space: pre-wrap; }
+    .warning { background: #fff3cd; border: 1px solid #ffc107; padding: 12px; border-radius: 6px; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <h1>☕ Firebase Database Seeder</h1>
+  <div class="warning">
+    ⚠️ <strong>Run this only once.</strong> Click "Seed Database" to add sample coffees and a discount code to your Firestore database.
+    Click "Clear All Data" only if you want to wipe everything and start fresh.
+  </div>
+  <button id="seedBtn" onclick="seedDatabase()">🌱 Seed Database</button>
+  <button id="clearBtn" class="danger" onclick="clearDatabase()">🗑️ Clear All Data</button>
+  <div id="log">Ready. Click "Seed Database" to begin...\n</div>
+
+  <!-- Firebase CDN -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js'
+    import {
+      getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp
+    } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'
+
+    // ── YOUR FIREBASE CONFIG ──────────────────────────────────────────────────
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvl-IYJmoFY__MAiFhWSjfWCp2xeNywi4",
+      authDomain: "coffee-85d20.firebaseapp.com",
+      projectId: "coffee-85d20",
+      storageBucket: "coffee-85d20.firebasestorage.app",
+      messagingSenderId: "825754108199",
+      appId: "1:825754108199:web:5736645a886c75c3392902"
+    }
+    // ─────────────────────────────────────────────────────────────────────────
+
+    const app = initializeApp(firebaseConfig)
+    const db = getFirestore(app)
+
+    const log = (msg) => {
+      const el = document.getElementById('log')
+      el.textContent += msg + '\n'
+      el.scrollTop = el.scrollHeight
+    }
+
+    const COFFEES = [
+      {
+        name: "Ethiopian Yirgacheffe",
+        origin: "Ethiopia",
+        price: 1499,
+        roast_level: "Light",
+        description: "Bright and floral with notes of jasmine, bergamot, and a citrusy lemon finish. One of Ethiopia's most prized single-origin coffees.",
+        image_url: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=600&q=80",
+        in_stock: true,
+        weight_grams: 250
+      },
+      {
+        name: "Colombian Supremo",
+        origin: "Colombia",
+        price: 1299,
+        roast_level: "Medium",
+        description: "A classic well-balanced cup with caramel sweetness, mild nuttiness, and a clean, smooth finish. Perfect for everyday brewing.",
+        image_url: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80",
+        in_stock: true,
+        weight_grams: 250
+      },
+      {
+        name: "Sumatra Mandheling",
+        origin: "Indonesia",
+        price: 1399,
+        roast_level: "Dark",
+        description: "Full-bodied and earthy with notes of dark chocolate, cedar, and a lingering smoky finish. Bold and unforgettable.",
+        image_url: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=600&q=80",
+        in_stock: true,
+        weight_grams: 250
+      },
+      {
+        name: "Kenya AA",
+        origin: "Kenya",
+        price: 1649,
+        roast_level: "Medium-Light",
+        description: "Vibrant and wine-like with blackcurrant, tomato, and bright acidity. One of the world's most distinctive coffees.",
+        image_url: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80",
+        in_stock: true,
+        weight_grams: 250
+      },
+      {
+        name: "Guatemala Antigua",
+        origin: "Guatemala",
+        price: 1199,
+        roast_level: "Medium",
+        description: "Rich and spicy with notes of dark cocoa, brown sugar, and a subtle smokiness. Grown in the volcanic highlands of Antigua.",
+        image_url: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&q=80",
+        in_stock: true,
+        weight_grams: 250
+      },
+      {
+        name: "Brazil Santos",
+        origin: "Brazil",
+        price: 999,
+        roast_level: "Medium-Dark",
+        description: "Mild and low-acid with notes of milk chocolate, peanut, and a smooth buttery body. The world's most popular coffee origin.",
+        image_url: "https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?w=600&q=80",
+        in_stock: true,
+        weight_grams: 250
+      },
+      {
+        name: "Costa Rica Tarrazu",
+        origin: "Costa Rica",
+        price: 1549,
+        roast_level: "Light",
+        description: "Clean and bright with peach, honey, and a delicate floral sweetness. Grown at high altitude in the legendary Tarrazu valley.",
+        image_url: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&q=80",
+        in_stock: true,
+        weight_grams: 250
+      },
+      {
+        name: "Yemen Mocha",
+        origin: "Yemen",
+        price: 1899,
+        roast_level: "Medium",
+        description: "Ancient and complex with wild blueberry, dark chocolate, and wine overtones. The original Mocha — a true collector's coffee.",
+        image_url: "https://images.unsplash.com/photo-1504630083234-14187a9df0f5?w=600&q=80",
+        in_stock: true,
+        weight_grams: 250
+      }
+    ]
+
+    const DISCOUNT_CODES = [
+      {
+        code: "WELCOME10",
+        discount_type: "percentage",
+        discount_value: 10,
+        min_order_value: 500,
+        max_discount: 200,
+        is_active: true,
+        usage_count: 0,
+        description: "10% off for new customers"
+      },
+      {
+        code: "FLAT200",
+        discount_type: "flat",
+        discount_value: 200,
+        min_order_value: 1500,
+        max_discount: 200,
+        is_active: true,
+        usage_count: 0,
+        description: "₹200 off on orders above ₹1500"
+      }
+    ]
+
+    window.seedDatabase = async () => {
+      const btn = document.getElementById('seedBtn')
+      btn.disabled = true
+      log('\n🚀 Starting seed...')
+
+      try {
+        // Seed coffees
+        log('\n📦 Adding coffee products...')
+        for (const coffee of COFFEES) {
+          await addDoc(collection(db, 'coffees'), {
+            ...coffee,
+            created_at: serverTimestamp()
+          })
+          log(`  ✅ Added: ${coffee.name}`)
+        }
+
+        // Seed discount codes
+        log('\n🎫 Adding discount codes...')
+        for (const code of DISCOUNT_CODES) {
+          await addDoc(collection(db, 'discount_codes'), {
+            ...code,
+            created_at: serverTimestamp()
+          })
+          log(`  ✅ Added code: ${code.code}`)
+        }
+
+        log('\n🎉 Done! Database seeded successfully.')
+        log('👉 You can now open your admin panel and customer store.')
+        log('⚠️  Do NOT click Seed again — it will create duplicates.')
+      } catch (err) {
+        log('\n❌ Error: ' + err.message)
+        log('Make sure your Firestore rules allow writes (test mode).')
+      } finally {
+        btn.disabled = false
+      }
+    }
+
+    window.clearDatabase = async () => {
+      if (!confirm('⚠️ This will DELETE all coffees, discount codes, and orders. Are you sure?')) return
+      const clearBtn = document.getElementById('clearBtn')
+      clearBtn.disabled = true
+      log('\n🗑️ Clearing database...')
+
+      try {
+        for (const col of ['coffees', 'discount_codes', 'orders']) {
+          const snap = await getDocs(collection(db, col))
+          for (const d of snap.docs) {
+            await deleteDoc(doc(db, col, d.id))
+          }
+          log(`  🗑️ Cleared ${snap.size} docs from '${col}'`)
+        }
+        log('\n✅ All data cleared.')
+      } catch (err) {
+        log('\n❌ Error: ' + err.message)
+      } finally {
+        clearBtn.disabled = false
+      }
+    }
+  </script>
+</body>
+</html>

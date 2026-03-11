@@ -1,0 +1,172 @@
+.coffee-card {
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(62,39,35,0.08);
+  transition: transform 0.35s cubic-bezier(0.34,1.16,0.64,1), box-shadow 0.35s ease;
+  border: 1px solid rgba(111,78,55,0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.coffee-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 48px rgba(62,39,35,0.16);
+}
+
+.coffee-card-link { text-decoration: none; flex: 1; display: flex; flex-direction: column; }
+
+/* Image */
+.coffee-image-wrap {
+  position: relative;
+  overflow: hidden;
+  height: 220px;
+}
+
+.coffee-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s ease;
+  display: block;
+}
+
+.coffee-card:hover .coffee-image { transform: scale(1.08); }
+
+.coffee-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(62,39,35,0.75) 0%, transparent 60%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.coffee-card:hover .coffee-overlay { opacity: 1; }
+
+.view-details-btn {
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border: 1.5px solid rgba(255,255,255,0.7);
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.wishlist-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(6px);
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s;
+  color: #aaa;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.wishlist-btn:hover { transform: scale(1.15); background: white; }
+.wishlist-btn.wishlisted { color: #e91e63; background: white; }
+
+.roast-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 0.28rem 0.7rem;
+  border-radius: 12px;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+/* Card info */
+.coffee-info {
+  padding: 1.2rem 1.35rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.coffee-origin-row { display: flex; align-items: center; }
+
+.coffee-origin {
+  font-size: 0.78rem;
+  color: #9a7060;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.coffee-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #3e2723;
+  line-height: 1.3;
+}
+
+.coffee-desc {
+  font-size: 0.82rem;
+  color: #7a6055;
+  line-height: 1.55;
+  flex: 1;
+}
+
+.coffee-footer {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.coffee-price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #6F4E37;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Add to cart button */
+.card-add-btn {
+  display: block;
+  width: calc(100% - 2rem);
+  margin: 0 1rem 1rem;
+  padding: 0.7rem;
+  background: linear-gradient(135deg, #6F4E37, #3e2723);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.3px;
+}
+
+.card-add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(111,78,55,0.4);
+}
+
+.card-add-btn.added {
+  background: linear-gradient(135deg, #2e7d32, #1b5e20);
+  transform: none;
+}
+

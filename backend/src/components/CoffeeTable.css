@@ -1,0 +1,294 @@
+.coffee-table-container {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-top: 2rem;
+  border: 1px solid rgba(111, 78, 55, 0.1);
+}
+
+.coffee-table-container h2 {
+  margin-bottom: 1.5rem;
+  color: #1a202c;
+  font-size: 1.5rem;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.coffee-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.coffee-table thead {
+  background: #f7fafc;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.coffee-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.coffee-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.coffee-table tbody tr {
+  transition: background 0.2s;
+}
+
+.coffee-table tbody tr:hover {
+  background: #f7fafc;
+}
+
+.table-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.coffee-name {
+  font-weight: 600;
+  color: #6F4E37;
+}
+
+.roast-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #4a5568;
+}
+
+.price {
+  font-weight: 700;
+  color: #38a169;
+  font-size: 1.1rem;
+}
+
+.description {
+  color: #718096;
+  font-size: 0.9rem;
+  max-width: 300px;
+}
+
+.delete-button {
+  padding: 0.5rem 1rem;
+  background: #fff5f5;
+  color: #c53030;
+  border: 1px solid #feb2b2;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.delete-button:hover {
+  background: #fed7d7;
+  border-color: #fc8181;
+}
+
+.empty-table {
+  text-align: center;
+  padding: 3rem;
+  color: #718096;
+  background: white;
+  border-radius: 12px;
+  margin-top: 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 768px) {
+  .table-wrapper {
+    overflow-x: scroll;
+  }
+
+  .coffee-table {
+    min-width: 800px;
+  }
+}
+
+/* ── Toolbar ── */
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.toolbar-left h2 {
+  color: #3e2723;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.toolbar-right {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.table-search,
+.table-filter {
+  padding: 0.55rem 0.9rem;
+  border: 2px solid #e0d5ca;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+  background: #fff;
+}
+
+.table-search:focus,
+.table-filter:focus {
+  border-color: #6F4E37;
+}
+
+.table-search { min-width: 220px; }
+
+/* ── Inline edit inputs ── */
+.edit-input {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border: 1.5px solid #e0d5ca;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  outline: none;
+}
+
+.edit-input.small { max-width: 100px; }
+.edit-select { padding: 0.4rem; border: 1.5px solid #e0d5ca; border-radius: 6px; font-size: 0.88rem; }
+.edit-textarea { width: 100%; padding: 0.4rem 0.6rem; border: 1.5px solid #e0d5ca; border-radius: 6px; font-size: 0.88rem; resize: vertical; }
+
+.editing-row {
+  background: #fffbef !important;
+}
+
+/* ── Action buttons ── */
+.action-buttons {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.edit-button {
+  padding: 0.4rem 0.8rem;
+  background: #e8f4fd;
+  color: #1565c0;
+  border: 1px solid #90caf9;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.edit-button:hover {
+  background: #bbdefb;
+}
+
+.save-button {
+  padding: 0.4rem 0.8rem;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.save-button:hover:not(:disabled) { background: #c8e6c9; }
+.save-button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.cancel-button {
+  padding: 0.4rem 0.8rem;
+  background: #fff;
+  color: #666;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.cancel-button:hover { background: #f5f5f5; }
+
+/* ── Message ── */
+.table-message {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.table-message.success { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+.table-message.error { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+
+/* ── Link button ── */
+.link-btn {
+  background: none;
+  border: none;
+  color: #6F4E37;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: underline;
+  padding: 0;
+}
+
+/* ── Delete modal ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: #fff;
+  border-radius: 14px;
+  padding: 2rem;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+
+.modal-box h3 {
+  color: #3e2723;
+  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+}
+
+.modal-box p {
+  color: #555;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
